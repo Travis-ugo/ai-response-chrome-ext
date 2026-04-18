@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "MentorAssistance AI",
+  "description": "An AI-powered writing assistant for mentors, featuring grammar correction, tone adjustment, and smart responses using Gemini AI.",
+  "version": "2.0",
+    "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": [
+    "https://www.codementor.io/",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.codementor.io/m/dashboard/open-requests/*"],
+        "js": ["content.js"],
+        "css": ["injected_styles.css"]
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "image.png",
+        "48": "image2.jpeg",
+        "128": "image2.jpeg"
+      }
+    }
+  }
+  

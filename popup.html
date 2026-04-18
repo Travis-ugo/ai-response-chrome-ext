@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 320px;
+      padding: 0;
+      margin: 0;
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .container {
+      padding: 24px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .header .icon {
+      font-size: 24px;
+      background: white;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(2, 126, 111, 0.1);
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #027E6F;
+      font-weight: 700;
+    }
+    .header p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+      border: 1px solid #f1f5f9;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: #64748b;
+    }
+    .input-wrapper {
+      position: relative;
+    }
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      box-sizing: border-box;
+      border: 2px solid #f1f5f9;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+      color: #1e293b;
+    }
+    input:focus {
+      border-color: #027E6F;
+      background: #f0fdfa;
+    }
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px;
+      background: #027E6F;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(2, 126, 111, 0.2);
+    }
+    button:hover {
+      background: #026b5e;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(2, 126, 111, 0.25);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .status {
+      margin-top: 12px;
+      font-size: 12px;
+      text-align: center;
+      color: #059669;
+      font-weight: 500;
+      display: none;
+      animation: ma-fade-in 0.3s ease;
+    }
+    .footer {
+      margin-top: 24px;
+      padding: 16px 24px;
+      background: #f1f5f9;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+      text-align: center;
+    }
+    .footer a {
+      color: #027E6F;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    @keyframes ma-fade-in {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">💡</div>
+      <div>
+        <h2>MentorAssistance</h2>
+        <p>AI Writing Assistant</p>
+      </div>
+    </div>
+    
+    <div class="card">
+      <label for="apiKey">Gemini API Key</label>
+      <div class="input-wrapper">
+        <input type="password" id="apiKey" placeholder="P_key_...">
+      </div>
+      <button id="saveBtn">Save Settings</button>
+      <div id="status" class="status">✨ Settings updated successfully!</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Need a key? Get one for free at <br>
+    <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

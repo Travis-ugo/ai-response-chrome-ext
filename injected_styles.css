@@ -1,0 +1,109 @@
+/* Injected Styles for MentorAssistance AI */
+
+:root {
+  --ma-glass-bg: rgba(255, 255, 255, 0.7);
+  --ma-glass-border: rgba(255, 255, 255, 0.3);
+  --ma-glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  --ma-accent: #027E6F;
+  --ma-text: #2f3e46;
+}
+
+/* Floating Light Bulb Container */
+#ma-ai-trigger {
+  position: absolute;
+  z-index: 10000;
+  cursor: pointer;
+  background: var(--ma-glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--ma-glass-border);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--ma-glass-shadow);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: ma-fade-in 0.2s ease-out;
+}
+
+#ma-ai-trigger:hover {
+  transform: scale(1.15) rotate(15deg);
+  background: #ffffff;
+}
+
+/* AI Action Menu */
+#ma-ai-menu {
+  position: absolute;
+  z-index: 10001;
+  background: var(--ma-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--ma-glass-border);
+  border-radius: 12px;
+  padding: 8px;
+  width: 200px;
+  box-shadow: var(--ma-glass-shadow);
+  animation: ma-slide-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.ma-menu-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ma-text);
+  transition: background 0.2s ease;
+}
+
+.ma-menu-item:hover {
+  background: rgba(2, 126, 111, 0.1);
+  color: var(--ma-accent);
+}
+
+.ma-menu-item svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ma-menu-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.05);
+  margin: 4px 8px;
+}
+
+/* Loading State for Menu Item */
+.ma-menu-item.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ma-menu-item.loading::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--ma-accent);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ma-spin 0.8s linear infinite;
+  margin-left: auto;
+}
+
+@keyframes ma-fade-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ma-slide-up {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes ma-spin {
+  to { transform: rotate(360deg); }
+}
