@@ -1,3 +1,6 @@
+import './injected_styles.css';
+import './button.css';
+
 // Global state for selection UI
 let activeTrigger = null;
 let activeMenu = null;
@@ -213,22 +216,7 @@ function createSuggestionButton(label) {
   const newButton = document.createElement("button");
   newButton.textContent = label;
   newButton.className = "ma-suggestion-btn";
-  newButton.style.cssText = `
-    cursor: pointer;
-    color: #2f3e46;
-    background-color: #ffffff;
-    border: 1px solid #d3e1e8;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    padding: 8px 12px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    display: inline-flex;
-    transition: all 0.2s ease-in-out;
-    margin: 4px;
-  `;
-
+  
   newButton.addEventListener("click", (event) => {
     event.preventDefault();
     const textField = document.querySelector("form textarea") || document.querySelector('[contenteditable="true"]');
@@ -278,7 +266,6 @@ const navigationWatcher = setInterval(() => {
 
       const container = document.createElement("div");
       container.id = "ma-suggestion-container";
-      container.style.cssText = "display: flex; flex-wrap: wrap; margin-bottom: 12px; min-height: 40px; align-items: center;";
       
       const loader = document.createElement("span");
       loader.textContent = "✨ Generating AI Suggestions...";

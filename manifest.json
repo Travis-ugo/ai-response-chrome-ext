@@ -14,8 +14,7 @@
     "content_scripts": [
       {
         "matches": ["https://www.codementor.io/m/dashboard/open-requests/*"],
-        "js": ["src/content.js"],
-        "css": ["src/injected_styles.css"]
+        "js": ["src/content.js"]
       }
     ],
     "action": {
