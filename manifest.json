@@ -9,21 +9,21 @@
     "https://generativelanguage.googleapis.com/*"
   ],
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "src/background.js"
     },
     "content_scripts": [
       {
         "matches": ["https://www.codementor.io/m/dashboard/open-requests/*"],
-        "js": ["content.js"],
-        "css": ["injected_styles.css"]
+        "js": ["src/content.js"],
+        "css": ["src/injected_styles.css"]
       }
     ],
     "action": {
-      "default_popup": "popup.html",
+      "default_popup": "src/popup.html",
       "default_icon": {
-        "16": "image.png",
-        "48": "image2.jpeg",
-        "128": "image2.jpeg"
+        "16": "src/assets/image.png",
+        "48": "src/assets/image2.jpeg",
+        "128": "src/assets/image2.jpeg"
       }
     }
   }

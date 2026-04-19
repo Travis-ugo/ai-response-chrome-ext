@@ -7,7 +7,7 @@ const DEFAULT_MODEL = "gemini-flash-latest";
 
 async function getApiKey() {
   const result = await chrome.storage.sync.get("gemini_api_key");
-  return result.gemini_api_key || "AIzaSyCpBri8LnjNPtVgBZlrEnVn-Hz8QdOr0tE";
+  return result.gemini_api_key || import.meta.env.VITE_GEMINI_API_KEY;
 }
 
 const SYSTEM_PROMPTS = {
@@ -58,7 +58,7 @@ async function callGemini(text, actionType) {
     }
 
     const data = await response.json();
-    
+
     // Check if the response actually contains content
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
       // Check for blocked content
@@ -69,7 +69,7 @@ async function callGemini(text, actionType) {
     }
 
     let rawText = data.candidates[0].content.parts[0].text.trim();
-    
+
     // Programmatic Safety Net: Strip all asterisks and bullet points
     // This ensures that even if Gemini ignores the prompt guidelines, the output is clean.
     const cleanText = rawText.replace(/\*/g, '').replace(/^- /gm, '').trim();

@@ -1,0 +1,27 @@
+{
+  "name": "mentorassistance-main",
+  "version": "1.0.0",
+  "description": "A simple chrome extension that makes responding to mentee requests easier using Ai.  It understands context and creates relevant response from request quickly using groq high speed inference.",
+  "main": "background.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Travis-ugo/ai-response-chrome-ext.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Travis-ugo/ai-response-chrome-ext/issues"
+  },
+  "homepage": "https://github.com/Travis-ugo/ai-response-chrome-ext#readme",
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.33",
+    "vite": "^8.0.8"
+  }
+}
