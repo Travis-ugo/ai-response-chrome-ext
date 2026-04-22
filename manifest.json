@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "MentorAssistance AI",
-  "description": "An AI-powered writing assistant for mentors, featuring grammar correction, tone adjustment, and smart responses using Gemini AI.",
+  "description": "An AI-powered writing assistant for mentors, featuring grammar correction, tone adjustment, and smart responses using Groq AI.",
   "version": "2.0",
     "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": [

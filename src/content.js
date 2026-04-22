@@ -210,7 +210,7 @@ function removeSelectionUI() {
   if (activeMenu) { activeMenu.remove(); activeMenu = null; }
 }
 
-// --- Original "Auto-Answer" logic restored & updated for Gemini ---
+// --- Original "Auto-Answer" logic restored & updated for Groq ---
 
 function createSuggestionButton(label) {
   const newButton = document.createElement("button");

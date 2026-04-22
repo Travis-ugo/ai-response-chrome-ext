@@ -2,12 +2,12 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("MentorAssistance AI Extension Installed");
 });
 
-// Default placeholders - using latest alias for compatibility
-const DEFAULT_MODEL = "gemini-flash-latest";
+// Default model for Groq
+const DEFAULT_MODEL = "llama-3.3-70b-versatile";
 
 async function getApiKey() {
-  const result = await chrome.storage.sync.get("gemini_api_key");
-  return result.gemini_api_key || import.meta.env.VITE_GEMINI_API_KEY;
+  const result = await chrome.storage.sync.get("groq_api_key");
+  return result.groq_api_key || import.meta.env.VITE_GROQ_API_KEY;
 }
 
 const SYSTEM_PROMPTS = {
@@ -21,62 +21,57 @@ const SYSTEM_PROMPTS = {
   translate_en: "Translate or refine to natural English. Return ONLY plain text without any markdown or asterisks."
 };
 
-async function callGemini(text, actionType) {
+async function callGroq(text, actionType) {
   const apiKey = await getApiKey();
   if (!apiKey) {
-    throw new Error("Gemini API Key not found. Please set it in the extension popup.");
+    throw new Error("Groq API Key not found. Please set it in the extension popup.");
   }
 
   const systemPrompt = SYSTEM_PROMPTS[actionType] || SYSTEM_PROMPTS.auto_answer;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODEL}:generateContent?key=${apiKey}`;
+  const url = "https://api.groq.com/openai/v1/chat/completions";
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{ text: `${systemPrompt}\n\nText to process:\n${text}` }]
-        }],
-        generationConfig: {
-          temperature: 0.85,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 2048,
-        }
+        model: DEFAULT_MODEL,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: `Text to process:\n${text}` }
+        ],
+        temperature: 0.85,
+        max_tokens: 1024,
+        top_p: 1,
+        stream: false
       })
     });
 
     if (!response.ok) {
       if (response.status === 429) {
-        throw new Error("Rate limit exceeded. Please wait a moment before trying again.");
+        throw new Error("Rate limit exceeded on Groq. Please wait a moment.");
       }
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+      throw new Error(errorData.error?.message || `Groq API Error: ${response.status}`);
     }
 
     const data = await response.json();
 
-    // Check if the response actually contains content
-    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
-      // Check for blocked content
-      if (data.candidates && data.candidates[0]?.finishReason === "SAFETY") {
-        throw new Error("The AI declined to process this text for safety reasons.");
-      }
-      throw new Error("Received an empty response from the AI.");
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error("Received an empty response from Groq.");
     }
 
-    let rawText = data.candidates[0].content.parts[0].text.trim();
+    let rawText = data.choices[0].message.content.trim();
 
-    // Programmatic Safety Net: Strip all asterisks and bullet points
-    // This ensures that even if Gemini ignores the prompt guidelines, the output is clean.
+    // Programmatic Safety Net: Strip all asterisks
     const cleanText = rawText.replace(/\*/g, '').replace(/^- /gm, '').trim();
 
     return cleanText;
   } catch (err) {
-    console.error("Gemini Fetch Error:", err);
+    console.error("Groq Fetch Error:", err);
     throw err;
   }
 }
@@ -96,7 +91,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       finalPrompt = `Client Name: ${context.clientName}\n\n${text}`;
     }
 
-    callGemini(finalPrompt, actionType)
+    callGroq(finalPrompt, actionType)
       .then((data) => {
         sendResponse({ success: true, data });
       })
